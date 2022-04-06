@@ -1,0 +1,290 @@
+[
+    {
+        "id": "b2d7864ed5b971ab",
+        "type": "tab",
+        "label": "Bot só boas vindas",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8d2727b9cdb1f7be",
+        "type": "http response",
+        "z": "b2d7864ed5b971ab",
+        "name": "Retorna resposta",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1150,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "6386b0cd5cc18a6b",
+        "type": "finish",
+        "z": "b2d7864ed5b971ab",
+        "name": "Finaliza",
+        "x": 920,
+        "y": 660,
+        "wires": [
+            [
+                "8d2727b9cdb1f7be"
+            ]
+        ]
+    },
+    {
+        "id": "fe7222fd46c03885",
+        "type": "sendtext",
+        "z": "b2d7864ed5b971ab",
+        "name": "Msg ao contato",
+        "position": "0",
+        "positionType": "num",
+        "text": "payload.infotext",
+        "textType": "msg",
+        "senderr": false,
+        "x": 400,
+        "y": 660,
+        "wires": [
+            [
+                "30c82839a8c7e4ae"
+            ]
+        ]
+    },
+    {
+        "id": "1a5199b89d584117",
+        "type": "template",
+        "z": "b2d7864ed5b971ab",
+        "name": "Mensagem de erro",
+        "field": "payload.infotext",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": " ❌ Desculpe pelo inconveniente, estamos com um problema técnico. \n \n Vou transferir você para um atendente humano, aguarde uns instantes.\n\n\n",
+        "output": "str",
+        "x": 170,
+        "y": 660,
+        "wires": [
+            [
+                "fe7222fd46c03885"
+            ]
+        ]
+    },
+    {
+        "id": "30c82839a8c7e4ae",
+        "type": "setslots",
+        "z": "b2d7864ed5b971ab",
+        "name": "Transfere para humano",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "handsoff",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 670,
+        "y": 660,
+        "wires": [
+            [
+                "6386b0cd5cc18a6b"
+            ]
+        ]
+    },
+    {
+        "id": "85aadbaaad3add03",
+        "type": "http in",
+        "z": "b2d7864ed5b971ab",
+        "name": "/newchat",
+        "url": "/newchat",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 40,
+        "wires": [
+            [
+                "494760ca9dbbc70a"
+            ]
+        ]
+    },
+    {
+        "id": "494760ca9dbbc70a",
+        "type": "init",
+        "z": "b2d7864ed5b971ab",
+        "name": "Salva dados recebidos",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "6a6ca6f890ff999b"
+            ]
+        ]
+    },
+    {
+        "id": "6a6ca6f890ff999b",
+        "type": "template",
+        "z": "b2d7864ed5b971ab",
+        "name": "Apresentação inicial do bot",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Olá {{slots.CHANNEL_name}}, muito prazer! 🙂\n\nEu sou {{flow.domain.daschat.config.bot.person_genre}} {{flow.domain.daschat.config.bot.person}}, atendente virtual d{{flow.domain.daschat.config.entity.speech_name_genre}} *{{flow.domain.daschat.config.entity.speech_name}}*.\n\nPor favor, aguarde alguns instantes. Em breve um de nossos atendentes irá entrar em contato com você.",
+        "output": "str",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "25cf49fc9af0fd63"
+            ]
+        ]
+    },
+    {
+        "id": "25cf49fc9af0fd63",
+        "type": "setslots",
+        "z": "b2d7864ed5b971ab",
+        "name": "Próxima ação do bot",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "done",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "49bcce16b587cd9a"
+            ]
+        ]
+    },
+    {
+        "id": "49bcce16b587cd9a",
+        "type": "sendtext",
+        "z": "b2d7864ed5b971ab",
+        "name": "Mensagem para o contato",
+        "position": "0",
+        "positionType": "num",
+        "text": "payload.text",
+        "textType": "msg",
+        "senderr": false,
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "590e998ee36928e1"
+            ]
+        ]
+    },
+    {
+        "id": "590e998ee36928e1",
+        "type": "finish",
+        "z": "b2d7864ed5b971ab",
+        "name": "Prepara retorno de mensagens",
+        "x": 550,
+        "y": 420,
+        "wires": [
+            [
+                "560c16e47f30f378"
+            ]
+        ]
+    },
+    {
+        "id": "560c16e47f30f378",
+        "type": "http response",
+        "z": "b2d7864ed5b971ab",
+        "name": "Retorna HTTP do endpoint",
+        "statusCode": "",
+        "headers": {},
+        "x": 640,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "9d33b472475521e6",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Informa ao DASCHAT que este bot completou o seu ciclo",
+        "info": "Ao setar o DAS_NEXT_ACTION = done o bot diz que ele fez tudo que tinha de ser feito por ele.",
+        "x": 780,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f6b2662e46905d84",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Aqui é definida a mensagem de apresentação a ser enviada ao contato",
+        "info": "",
+        "x": 740,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "38ceec861f9f5e1c",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Endpoint HTTP que recebe a chamada. Não podem existir 2  com o mesmo valor no campo URL no mesmo servidor actionserver",
+        "info": "",
+        "x": 660,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e9e4f2fe5913b09a",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Aqui os dados recebidos pelo endpoint são armazenados para uso posterior",
+        "info": "",
+        "x": 620,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "166ae42f53f72496",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "Se ocorrer algum erro nos nós acima este fluxo será executado",
+        "info": "",
+        "x": 430,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "b6d201cfac4c3dec",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Prepara uma resposta do tipo texto para o Daschat",
+        "info": "",
+        "x": 840,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b1aafc0bf223f6df",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "<-- Transforma os dados do pyaload para uma resposta padrão Daschat action server",
+        "info": "",
+        "x": 1040,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "17e230126b066ec3",
+        "type": "comment",
+        "z": "b2d7864ed5b971ab",
+        "name": "Retorna uma resposta json/rest para este endpoint HTTP",
+        "info": "",
+        "x": 1010,
+        "y": 480,
+        "wires": []
+    }
+]
