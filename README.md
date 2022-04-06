@@ -9,4 +9,5 @@ Exemplos de bots feitos com a plataforma low code do Daschat.
 #### Bot sem ITM
 O tipo de bot mais simples possível. Retorna uma mensagem ao contato e transfere imeditamente a conversa para um atendente humano (handsoff)
 
+O exemplo é este: [just_welcome](just_welcome/flows.json)
 
