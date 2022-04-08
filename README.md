@@ -22,7 +22,7 @@ Exemplos:
 | Responde ao contato com uma apresentação inicial e transfere para atendente humano em seguida | [just_welcome](just_welcome/flows.json) |
 
 #### Bots com ITM
-O tipo de bot mais simples possível. Retorna uma mensagem ao contato e transfere imeditamente a conversa para um atendente humano (handsoff)
+Estes bots enviam mensagens de texto contendo menus com opções numeradas para que o contato escolha o caminho que ele quer seguir na conversa. É o equivalente ao que se conhece como URA com IVR em sistemas de telefonia. Normalmente o contato deve de responder digitando o número da opção desejada ou clicando em um botão interativo.
 
 Exemplos: 
 
