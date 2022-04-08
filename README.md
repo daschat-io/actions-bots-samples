@@ -8,6 +8,8 @@ Exemplos de bots feitos com a plataforma low code do Daschat.
 
 **FLUXO DA CONVERSA** = Todas as etapas por onde as mensagens de uma conversa passam. Pode ser um bot de inteligência artificial, bot interativo, um plugin de integração a um sistema de ERP ou os agentes humanos usando um sistema de atendimento.
 
+**HANDSOFF** = O ato de transferir o fluxo da conversa para um atendente humano.
+
 ### Exemplos disponíveis
 
 #### Bots sem ITM
