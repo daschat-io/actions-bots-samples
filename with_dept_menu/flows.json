@@ -1,0 +1,571 @@
+[
+    {
+        "id": "856ba5a4a9ca0f33",
+        "type": "tab",
+        "label": "Bot com menu de departamentos",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2dc656eb6e85a767",
+        "type": "http in",
+        "z": "856ba5a4a9ca0f33",
+        "name": "/newchat",
+        "url": "/newchat",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 40,
+        "wires": [
+            [
+                "eeae2d9f69708207"
+            ]
+        ]
+    },
+    {
+        "id": "eeae2d9f69708207",
+        "type": "init",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Salva dados recebidos",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "bbe0227b98a3ea10"
+            ]
+        ]
+    },
+    {
+        "id": "bbe0227b98a3ea10",
+        "type": "switch",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Qual ação executar",
+        "property": "action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "action_chat_start",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "action_valida_dept",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "5c5e41719d0261d2"
+            ],
+            [
+                "084ce8afbb3baae3"
+            ],
+            [
+                "5c5e41719d0261d2"
+            ]
+        ]
+    },
+    {
+        "id": "5c5e41719d0261d2",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Apresentação inicial com menu",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Olá {{slots.CHANNEL_name}}, muito prazer! 🙂\n\nEu sou {{flow.domain.daschat.config.bot.person_genre}} {{flow.domain.daschat.config.bot.person}}, atendente virtual d{{flow.domain.daschat.config.entity.speech_name_genre}} *{{flow.domain.daschat.config.entity.speech_name}}*.",
+        "output": "str",
+        "x": 590,
+        "y": 60,
+        "wires": [
+            [
+                "bc94f4684d6c7581"
+            ]
+        ]
+    },
+    {
+        "id": "1c0472d9087955c2",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Próxima ação do bot",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "action_valida_dept",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 1080,
+        "y": 60,
+        "wires": [
+            [
+                "14aae22756e01bdd"
+            ]
+        ]
+    },
+    {
+        "id": "14aae22756e01bdd",
+        "type": "sendtext",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Notifica ao contato",
+        "position": "0",
+        "positionType": "num",
+        "text": "payload.text",
+        "textType": "msg",
+        "senderr": false,
+        "x": 1170,
+        "y": 260,
+        "wires": [
+            [
+                "979672cad985a1e6"
+            ]
+        ]
+    },
+    {
+        "id": "979672cad985a1e6",
+        "type": "finish",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Finaliza ação",
+        "x": 1170,
+        "y": 340,
+        "wires": [
+            [
+                "c7627b2d8dc189f3"
+            ]
+        ]
+    },
+    {
+        "id": "c7627b2d8dc189f3",
+        "type": "http response",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Retorna resposta",
+        "statusCode": "",
+        "headers": {},
+        "x": 1210,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "084ce8afbb3baae3",
+        "type": "switch",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Validar menu",
+        "property": "tracker.das_msg.content",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "5",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 310,
+        "y": 360,
+        "wires": [
+            [
+                "577c1fcb291d6d75"
+            ],
+            [
+                "5cbcdef4c15ba978"
+            ],
+            [
+                "51b788b008c8791b"
+            ],
+            [
+                "b9402ad6b134e0f2"
+            ],
+            [
+                "8286f2178884dff1"
+            ],
+            [
+                "7a312e06833beab7"
+            ]
+        ]
+    },
+    {
+        "id": "577c1fcb291d6d75",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Suporte",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "done",
+                "slotvalue-type": "str"
+            },
+            {
+                "slotname": "CHAT_DEPARTMENT",
+                "slotname-type": "str",
+                "slotvalue": "Suporte",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "7c4e14c299ca6de3"
+            ]
+        ]
+    },
+    {
+        "id": "d6040e16ff1f6eab",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Repete menu",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "A opção escolhida não é válida.\n\nPor favor, escolha sobre o que você quer conversar:\n\n1 - Suporte\n2 - Financeiro\n3 - Comercial\n4 - Outro assunto\n5 - Encerrar a conversa",
+        "output": "str",
+        "x": 860,
+        "y": 400,
+        "wires": [
+            [
+                "14aae22756e01bdd"
+            ]
+        ]
+    },
+    {
+        "id": "7a312e06833beab7",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Escolha incorreta",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "action_valida_dept",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "d6040e16ff1f6eab"
+            ]
+        ]
+    },
+    {
+        "id": "3f1d54e3b88e3634",
+        "type": "catch",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Pega erros",
+        "scope": null,
+        "uncaught": false,
+        "x": 80,
+        "y": 620,
+        "wires": [
+            [
+                "8f3e06cf39453112"
+            ]
+        ]
+    },
+    {
+        "id": "fd305c490f2b3e14",
+        "type": "http response",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Retorna resposta",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1250,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6087bfabbb6f038e",
+        "type": "finish",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Finaliza",
+        "x": 1020,
+        "y": 620,
+        "wires": [
+            [
+                "fd305c490f2b3e14"
+            ]
+        ]
+    },
+    {
+        "id": "08ae74205b8ddf10",
+        "type": "sendtext",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Msg ao contato",
+        "position": "0",
+        "positionType": "num",
+        "text": "payload.infotext",
+        "textType": "msg",
+        "senderr": false,
+        "x": 500,
+        "y": 620,
+        "wires": [
+            [
+                "8cade702b563ebab"
+            ]
+        ]
+    },
+    {
+        "id": "8f3e06cf39453112",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Mensagem de erro",
+        "field": "payload.infotext",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": " ❌ Desculpe pelo inconveniente, estamos com um problema técnico. \n \n Vou transferir você para um atendente humano, aguarde uns instantes.\n\n\n",
+        "output": "str",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "08ae74205b8ddf10"
+            ]
+        ]
+    },
+    {
+        "id": "8cade702b563ebab",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Transfere para humano",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "handsoff",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 770,
+        "y": 620,
+        "wires": [
+            [
+                "6087bfabbb6f038e"
+            ]
+        ]
+    },
+    {
+        "id": "5cbcdef4c15ba978",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Financeiro",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "done",
+                "slotvalue-type": "str"
+            },
+            {
+                "slotname": "CHAT_DEPARTMENT",
+                "slotname-type": "str",
+                "slotvalue": "Financeiro",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "7c4e14c299ca6de3"
+            ]
+        ]
+    },
+    {
+        "id": "51b788b008c8791b",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Comercial",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "done",
+                "slotvalue-type": "str"
+            },
+            {
+                "slotname": "CHAT_DEPARTMENT",
+                "slotname-type": "str",
+                "slotvalue": "Comercial",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "7c4e14c299ca6de3"
+            ]
+        ]
+    },
+    {
+        "id": "b9402ad6b134e0f2",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Outros",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "done",
+                "slotvalue-type": "str"
+            },
+            {
+                "slotname": "CHAT_DEPARTMENT",
+                "slotname-type": "str",
+                "slotvalue": "Geral",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "7c4e14c299ca6de3"
+            ]
+        ]
+    },
+    {
+        "id": "bc94f4684d6c7581",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Menu de opções",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.text}}\n\nPor favor, escolha sobre o que você quer conversar:\n\n1 - Suporte\n2 - Financeiro\n3 - Comercial\n4 - Outro assunto\n5 - Encerrar a conversa\n\n```Informe o número da opção desejada```",
+        "output": "str",
+        "x": 850,
+        "y": 60,
+        "wires": [
+            [
+                "1c0472d9087955c2"
+            ]
+        ]
+    },
+    {
+        "id": "8286f2178884dff1",
+        "type": "setslots",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Encerrar conversa",
+        "text": "",
+        "addcheck": false,
+        "slots": [
+            {
+                "slotname": "DAS_NEXT_ACTION",
+                "slotname-type": "str",
+                "slotvalue": "CHAT_CLOSE",
+                "slotvalue-type": "str"
+            }
+        ],
+        "senderr": false,
+        "x": 570,
+        "y": 320,
+        "wires": [
+            [
+                "ac65f150f898c66c"
+            ]
+        ]
+    },
+    {
+        "id": "ac65f150f898c66c",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Despedida",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Obrigado por entrar em contato, se precisar de qualquer outra ajuda, é só nos chamar! 😊😊\n\n*Se preferir, também atendemos por*:\n\nEmail: r7@r7tecnologia.com.br\nSite: https://r7tecnologia.com.br\nTelefone: 27 3315-5177\n",
+        "output": "str",
+        "x": 850,
+        "y": 320,
+        "wires": [
+            [
+                "14aae22756e01bdd"
+            ]
+        ]
+    },
+    {
+        "id": "7c4e14c299ca6de3",
+        "type": "template",
+        "z": "856ba5a4a9ca0f33",
+        "name": "Mensagem pós seleção",
+        "field": "payload.text",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{slots.CHANNEL_name}}, por favor, aguarde alguns instantes. Em breve um de nossos atendentes irá entrar em contato com você.",
+        "output": "str",
+        "x": 890,
+        "y": 260,
+        "wires": [
+            [
+                "14aae22756e01bdd"
+            ]
+        ]
+    }
+]
